@@ -7,7 +7,7 @@ from Adarsh.utils.database import Database
 from Adarsh.utils.human_readable import humanbytes
 from Adarsh.vars import Var
 from urllib.parse import quote_plus
-from pyrogram import filters, Client
+from pyrogram import filters, Client, enums
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -24,7 +24,7 @@ pass_db = Database(Var.DATABASE_URL, "ag_passwords")
 async def login_handler(c: Client, m: Message):
     try:
         try:
-            ag = await m.reply_text("Now send me password.\n\n If You don't know check the MY_PASS Variable in heroku \n\n(You can use /cancel command to cancel the process)")
+            ag = await m.reply_text("Now send me password.\n\n If You don't know ask @kwicadmin \n\n(You can use /cancel command to cancel the process)")
             _text = await c.listen(m.chat.id, filters=filters.text, timeout=90)
             if _text.text:
                 textp = _text.text
@@ -64,11 +64,10 @@ async def private_receive_handler(c: Client, m: Message):
     if Var.UPDATES_CHANNEL != "None":
         try:
             user = await c.get_chat_member(Var.UPDATES_CHANNEL, m.chat.id)
-            if user.status == "kicked":
+            if user.status == enums.ChatMemberStatus.BANNED:
                 await c.send_message(
                     chat_id=m.chat.id,
-                    text="You are banned!\n\n  **Cᴏɴᴛᴀᴄᴛ Dᴇᴠᴇʟᴏᴘᴇʀ [Adarsh Goel](https://github.com/adarsh-goel) ʜᴇ Wɪʟʟ Hᴇʟᴘ Yᴏᴜ**",
-                    
+                    text="ʏᴏᴜ ᴀʀᴇ 𝙱𝙰𝙽𝙽ᴇᴅ ʙᴇᴄᴀᴜsᴇ ᴏғ ᴠɪᴏʟᴀᴛɪɴɢ ʀᴜʟᴇs🙂../ **",
                     disable_web_page_preview=True
                 )
                 return 
@@ -90,7 +89,7 @@ async def private_receive_handler(c: Client, m: Message):
             await m.reply_text(e)
             await c.send_message(
                 chat_id=m.chat.id,
-                text="**Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ Wʀᴏɴɢ. Cᴏɴᴛᴀᴄᴛ ᴍʏ ʙᴏss** [Adarsh Goel](https://github.com/adarsh-goel)",
+                text="**Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ Wʀᴏɴɢ. Cᴏɴᴛᴀᴄᴛ ᴍʏ ʙᴏss** [𝗞𝗪𝗜𝗖](https://t.me/kwicadmin)",
                 
                 disable_web_page_preview=True)
             return
